@@ -84,7 +84,6 @@ void Initialize() {
 #endif
     
     glViewport(0, 0, 1280, 720);
-    
     program.Load("shaders/vertex_textured.glsl", "shaders/fragment_textured.glsl");
     
     viewMatrix = glm::mat4(1.0f);
