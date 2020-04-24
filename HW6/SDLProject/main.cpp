@@ -23,11 +23,13 @@ bool gameIsRunning = true;
 ShaderProgram program;
 glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
 
-#define OBJECT_COUNT 2
+#define OBJECT_COUNT 4
+#define ENEMY_COUNT 10
 
 struct GameState {
     Entity *player;
     Entity *objects;
+    Entity *enemies;
 };
 
 GameState state;
@@ -65,66 +67,56 @@ void Initialize() {
     
     state.player = new Entity();
     state.player->entityType = PLAYER;
-    state.player->position = glm::vec3(0, 1.5f, 0);
+    state.player->position = glm::vec3(0, 0.75f, 0);
     state.player->acceleration = glm::vec3(0, 0, 0);
     state.player->speed = 1.0f;
     
     state.objects = new Entity[OBJECT_COUNT];
     
-    GLint shipTextureID = Util::LoadTexture("ship.png");
+    GLint floorTextureID = Util::LoadTexture("floor.jpg");
+    Mesh *cubeMesh = new Mesh();
+    cubeMesh->LoadOBJ("cube.obj", 20);
     
-    Mesh *shipMesh = new Mesh();
-    shipMesh->LoadOBJ("ship.obj");
+    state.objects[0].textureID = floorTextureID;
+    state.objects[0].mesh = cubeMesh;
+    state.objects[0].position = glm::vec3(0, -0.25f, 0);
+    state.objects[0].rotation = glm::vec3(0, 0, 0);
+    state.objects[0].acceleration = glm::vec3(0, 0, 0);
+    state.objects[0].scale = glm::vec3(20, 0.5f, 20);
+    state.objects[0].entityType = FLOOR;
     
-    state.objects[0].textureID = shipTextureID;
-    state.objects[0].mesh = shipMesh;
-    state.objects[0].position = glm::vec3(-5, 0, 10);
-    state.objects[0].rotation = glm::vec3(0, 180, 0);
-    state.objects[0].acceleration = glm::vec3(0, 0, -10);
-    state.objects[0].entityType = SHIP;
+    GLuint crateTextureID = Util::LoadTexture("crate1_diffuse.png");
+    Mesh *crateMesh = new Mesh();
+    crateMesh->LoadOBJ("cube.obj", 1);
     
-    state.objects[1].textureID = shipTextureID;
-    state.objects[1].mesh = shipMesh;
-    state.objects[1].position = glm::vec3(5, 0, 10);
-    state.objects[1].rotation = glm::vec3(0, 180, 0);
-    state.objects[1].acceleration = glm::vec3(0, 0, -10);
-    state.objects[1].entityType = SHIP;
+    state.objects[1].textureID = crateTextureID;
+    state.objects[1].mesh = crateMesh;
+    state.objects[1].position = glm::vec3(0, 0.5f, -5);
+    state.objects[1].entityType = CRATE;
     
-//    GLint cubeTextureID = Util::LoadTexture("crate1_diffuse.png");
-//
-//    Mesh *cubeMesh = new Mesh();
-//    cubeMesh->LoadOBJ("cube.obj");
-//
-//    state.objects[0].textureID = cubeTextureID;
-//    state.objects[0].mesh = cubeMesh;
-//    state.objects[0].position = glm::vec3(0, 0, -5);
-//
-//    state.objects[0].entityType = CUBE;
-//
-//    GLint marioTextureID = Util::LoadTexture("mario_body.png");
-//
-//    Mesh *marioMesh = new Mesh();
-//    marioMesh->LoadOBJ("mario.obj");
-//
-//    state.objects[1].textureID = marioTextureID;
-//    state.objects[1].mesh = marioMesh;
-//    state.objects[1].position = glm::vec3(-10, 0, -40);
-//    state.objects[1].scale = glm::vec3(0.25f, 0.25f, 0.25f);
-//    state.objects[1].entityType = ENEMY;
-//
-//    GLint pikachuTextureID = Util::LoadTexture("pikachu.png");
-//
-//    Mesh *pikachuMesh = new Mesh();
-//    pikachuMesh->LoadOBJ("pikachu.obj");
-//
-//    state.objects[2].textureID = pikachuTextureID;
-//    state.objects[2].mesh = pikachuMesh;
-//    state.objects[2].position = glm::vec3(2, 0, -5);
-//    state.objects[2].entityType = ENEMY;
+    state.objects[2].textureID = crateTextureID;
+    state.objects[2].mesh = crateMesh;
+    state.objects[2].position = glm::vec3(-1, 0.5f, -5);
+    state.objects[2].entityType = CRATE;
     
+    state.objects[3].textureID = crateTextureID;
+    state.objects[3].mesh = crateMesh;
+    state.objects[3].position = glm::vec3(0, 1.5f, -5);
+    state.objects[3].entityType = CRATE;
     
+    state.enemies = new Entity[ENEMY_COUNT];
     
+    GLuint enemyTextureID = Util::LoadTexture("zomb.png");
+    
+    for (int i = 0; i < ENEMY_COUNT; i++) {
+        state.enemies[i].billboard = true;
+        state.enemies[i].textureID = enemyTextureID;
+        state.enemies[i].position = glm::vec3(rand() % 20 - 10, 0.5, rand() % 20 - 10);
+        state.enemies[i].rotation = glm::vec3(0, 0, 0);
+        state.enemies[i].acceleration = glm::vec3(0, 0, 0);
+    }
 }
+
 
 void ProcessInput() {
     SDL_Event event;
@@ -145,6 +137,24 @@ void ProcessInput() {
                 break;
         }
     }
+    
+    const Uint8 *keys = SDL_GetKeyboardState(NULL);
+    if (keys[SDL_SCANCODE_A]) {
+        state.player->rotation.y += 1.0f;
+    } else if (keys[SDL_SCANCODE_D]) {
+        state.player->rotation.y -= 1.0f;
+    }
+    
+    state.player->velocity.x = 0;
+    state.player->velocity.z = 0;
+    
+    if (keys[SDL_SCANCODE_W]) {
+        state.player->velocity.z = cos(glm::radians(state.player->rotation.y)) * -2.0f;
+        state.player->velocity.x = sin(glm::radians(state.player->rotation.y)) * -2.0f;
+    } else if (keys[SDL_SCANCODE_S]) {
+        state.player->velocity.z = cos(glm::radians(state.player->rotation.y)) * 2.0f;
+        state.player->velocity.x = sin(glm::radians(state.player->rotation.y)) * 2.0f;
+    }
 }
 
 #define FIXED_TIMESTEP 0.0166666f
@@ -163,27 +173,42 @@ void Update() {
     }
     
     while (deltaTime >= FIXED_TIMESTEP) {
-        state.player->Update(FIXED_TIMESTEP);
+        state.player->Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
         
         for (int i = 0; i < OBJECT_COUNT; i++){
-            state.objects[i].Update(FIXED_TIMESTEP);
+            state.objects[i].Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
+        }
+        
+        for (int i = 0; i < ENEMY_COUNT; i++){
+            state.enemies[i].Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
         }
         
         deltaTime -= FIXED_TIMESTEP;
     }
     
     accumulator = deltaTime;
+    
+    viewMatrix = glm::mat4(1.0f);
+    viewMatrix = glm::rotate(viewMatrix, glm::radians(state.player->rotation.y), glm::vec3(0, -1.0f, 0));
+    viewMatrix = glm::translate(viewMatrix, -state.player->position);
 }
 
 
 void Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+    program.SetViewMatrix(viewMatrix);
+    
     //state.player->Render(&program);
     
     for (int i = 0; i < OBJECT_COUNT; i++){
         state.objects[i].Render(&program);
     }
+    
+    for (int i = 0; i < ENEMY_COUNT; i++){
+        state.enemies[i].Render(&program);
+    }
+    
     
     SDL_GL_SwapWindow(displayWindow);
 }
