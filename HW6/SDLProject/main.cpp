@@ -26,7 +26,7 @@ glm::mat4 uiViewMatrix, uiProjectionMatrix;
 GLuint fontTextureID;
 GLuint heartTextureID;
 
-#define OBJECT_COUNT 4
+#define OBJECT_COUNT 133
 #define ENEMY_COUNT 10
 #define DOOR_COUNT 1
 
@@ -41,7 +41,7 @@ GameState state;
 
 void Initialize() {
     SDL_Init(SDL_INIT_VIDEO);
-    displayWindow = SDL_CreateWindow("3D!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_OPENGL);
+    displayWindow = SDL_CreateWindow("ZOOMBIE!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_OPENGL);
     SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
     SDL_GL_MakeCurrent(displayWindow, context);
     
@@ -78,7 +78,7 @@ void Initialize() {
     
     state.player = new Entity();
     state.player->entityType = PLAYER;
-    state.player->position = glm::vec3(0, 0.75f, 0);
+    state.player->position = glm::vec3(-3.5f, 0.75f, 15.5f);
     state.player->acceleration = glm::vec3(0, 0, 0);
     state.player->speed = 1.0f;
     
@@ -100,20 +100,151 @@ void Initialize() {
     Mesh *crateMesh = new Mesh();
     crateMesh->LoadOBJ("cube.obj", 1);
     
-    state.objects[1].textureID = crateTextureID;
-    state.objects[1].mesh = crateMesh;
-    state.objects[1].position = glm::vec3(0, 0.5f, -5);
-    state.objects[1].entityType = CRATE;
+    int index = 1;
+    // left wall
+    for (float i = -9.5f; i <= 9.5f; i++){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(9.5, 0.5f, i);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
     
-    state.objects[2].textureID = crateTextureID;
-    state.objects[2].mesh = crateMesh;
-    state.objects[2].position = glm::vec3(-1, 0.5f, -5);
-    state.objects[2].entityType = CRATE;
+    // right wall
+    for (float i = -9.5f; i <= 9.5f; i++){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(-9.5, 0.5f, i);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
     
-    state.objects[3].textureID = crateTextureID;
-    state.objects[3].mesh = crateMesh;
-    state.objects[3].position = glm::vec3(0, 1.5f, -5);
-    state.objects[3].entityType = CRATE;
+    // entrance side
+    for (float i = -8.5f; i <= 9.5f; i++){
+        if (i < -5.5f || i > -2.5f){
+            state.objects[index].textureID = crateTextureID;
+            state.objects[index].mesh = crateMesh;
+            state.objects[index].position = glm::vec3(i, 0.5f, 9.5f);
+            state.objects[index].entityType = CRATE;
+            index++;
+        }
+    }
+    
+    // exit side
+    for (float i = -8.5f; i <= 9.5f; i++){
+        if (i < 3.5f || i > 5.5f){
+            state.objects[index].textureID = crateTextureID;
+            state.objects[index].mesh = crateMesh;
+            state.objects[index].position = glm::vec3(i, 0.5f, -9.5f);
+            state.objects[index].entityType = CRATE;
+            index++;
+        }
+    }
+    
+    // 1v
+    for (float i = 8.5f; i >= 5.5f; i--){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(-6.5, 0.5f, i);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
+    
+    // 1h
+    for (float i = -5.5f; i <= -2.5f; i++){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(i, 0.5f, 5.5f);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
+    
+    // 2v
+    for (float i = 8.5f; i >= 2.5f; i--){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(1.5f, 0.5f, i);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
+    
+    // 2h
+    for (float i = -5.5f; i < 1.5f; i++){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(i, 0.5f, 2.5f);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
+    
+    // 3v
+    for (float i = 8.5f; i >= 6.5f; i--){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(5.5f, 0.5f, i);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
+    
+    //4h
+    for (float i = 6.5f; i < 9.5f; i++){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(i, 0.5f, 2.5f);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
+    
+    // 5h
+    for (float i = -3.5f; i < 9.5f; i++){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(i, 0.5f, -1.5f);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
+    
+    // 6v
+    for (float i = -2.5f; i >= -5.5f; i--){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(-6.5, 0.5f, i);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
+    
+
+    // 7v
+    for (float i = -8.5f; i <= -6.5f; i++){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(6.5f, 0.5f, i);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
+    
+    
+    // 6h
+    for (float i = -5.5f; i <= 7.5f; i++){
+        state.objects[index].textureID = crateTextureID;
+        state.objects[index].mesh = crateMesh;
+        state.objects[index].position = glm::vec3(i, 0.5f, -5.5f);
+        state.objects[index].entityType = CRATE;
+        index++;
+    }
+    std::cout << index;
+    
+    
+//    state.objects[21].textureID = crateTextureID;
+//    state.objects[21].mesh = crateMesh;
+//    state.objects[21].position = glm::vec3(-8.5, 0.5f, -9.5);
+//    state.objects[21].entityType = CRATE;
+//
+//    state.objects[22].textureID = crateTextureID;
+//    state.objects[22].mesh = crateMesh;
+//    state.objects[22].position = glm::vec3(-7.5, 0.5f, -9.5);
+//    state.objects[22].entityType = CRATE;
+    
     
     state.enemies = new Entity[ENEMY_COUNT];
     
@@ -133,7 +264,8 @@ void Initialize() {
     GLuint doorTextureID = Util::LoadTexture("door.png");
     state.door->billboard = true;
     state.door->textureID = doorTextureID;
-    state.door->position = glm::vec3(9.25f, 0.47f, -9.5f);
+    state.door->position = glm::vec3(4.5f, 0.75f, -9.5f);
+    state.door->scale = glm::vec3(3, 3, 3);
     state.door->entityType = DOOR;
 
 }
