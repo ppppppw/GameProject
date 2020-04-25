@@ -27,8 +27,8 @@ GLuint fontTextureID;
 GLuint heartTextureID;
 
 #define OBJECT_COUNT 133
-#define ENEMY_COUNT 10
-#define DOOR_COUNT 1
+#define ENEMY_COUNT 3
+
 
 struct GameState {
     Entity *player;
@@ -76,6 +76,7 @@ void Initialize() {
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     
+    //initialize player
     state.player = new Entity();
     state.player->entityType = PLAYER;
     state.player->position = glm::vec3(-3.5f, 0.75f, 15.5f);
@@ -84,6 +85,7 @@ void Initialize() {
     
     state.objects = new Entity[OBJECT_COUNT];
     
+    //initialize platform
     GLint floorTextureID = Util::LoadTexture("floor.jpg");
     Mesh *cubeMesh = new Mesh();
     cubeMesh->LoadOBJ("cube.obj", 20);
@@ -96,6 +98,7 @@ void Initialize() {
     state.objects[0].scale = glm::vec3(20, 0.5f, 20);
     state.objects[0].entityType = FLOOR;
     
+    //initialize crate
     GLuint crateTextureID = Util::LoadTexture("crate1_diffuse.png");
     Mesh *crateMesh = new Mesh();
     crateMesh->LoadOBJ("cube.obj", 1);
@@ -233,32 +236,29 @@ void Initialize() {
         index++;
     }
     std::cout << index;
+
     
-    
-//    state.objects[21].textureID = crateTextureID;
-//    state.objects[21].mesh = crateMesh;
-//    state.objects[21].position = glm::vec3(-8.5, 0.5f, -9.5);
-//    state.objects[21].entityType = CRATE;
-//
-//    state.objects[22].textureID = crateTextureID;
-//    state.objects[22].mesh = crateMesh;
-//    state.objects[22].position = glm::vec3(-7.5, 0.5f, -9.5);
-//    state.objects[22].entityType = CRATE;
-    
-    
+    //enemy initialization
     state.enemies = new Entity[ENEMY_COUNT];
-    
     GLuint enemyTextureID = Util::LoadTexture("zomb.png");
     
     for (int i = 0; i < ENEMY_COUNT; i++) {
         state.enemies[i].billboard = true;
         state.enemies[i].textureID = enemyTextureID;
-        state.enemies[i].position = glm::vec3(rand() % 20 - 10, 0.5, rand() % 20 - 10);
-        state.enemies[i].rotation = glm::vec3(0, 0, 0);
         state.enemies[i].acceleration = glm::vec3(0, 0, 0);
         state.enemies[i].entityType = ENEMY;
+        state.enemies[i].rotation = glm::vec3(0, 0, 0);
+        state.enemies[i].aiType = WALKER;
+        state.enemies[i].aiState = WALKING;
+        state.enemies[i].speed = 1.0f;
     }
     
+    state.enemies[0].position = glm::vec3(0, 0.5f, 5.5f);
+    state.enemies[1].position = glm::vec3(7.0f, 0.5f, 5.5f);
+    state.enemies[2].position = glm::vec3(2.75f, 0.5f, 4.5f);
+  
+ 
+  
     
     state.door = new Entity();
     GLuint doorTextureID = Util::LoadTexture("door.png");

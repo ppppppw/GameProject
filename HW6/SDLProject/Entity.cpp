@@ -7,9 +7,11 @@ Entity::Entity()
     velocity = glm::vec3(0);
     rotation = glm::vec3(0);
     scale = glm::vec3(1);
+    movement = glm::vec3(0);
+    aiType = WALKER;
+    aiState = WALKING;
     
     modelMatrix = glm::mat4(1.0f);
-    
     speed = 0.0f;
     billboard = false;
     width = 1.0f;
@@ -26,19 +28,50 @@ bool Entity::CheckCollision(Entity *other)
     return false;
 }
 
+void Entity::AI(Entity *player, float deltaTime){
+    switch(aiType){
+        case WALKER:
+            AIWalker();
+            break;
+            
+        case JUMPER:
+            AIJumper(deltaTime);
+    }
+}
+
+void Entity::AIWalker(){
+    movement = glm::vec3(0, 0, 1);
+}
+
+void Entity::AIJumper(float deltaTime){
+    movement = glm::vec3(0, 0.8, 0);
+    position += movement * speed * deltaTime;
+}
+
+void Entity::AIWaitAndGo(Entity *player){
+    switch(aiState){
+        case WALKING:
+            if (player->position.x < position.x) {
+                movement = glm::vec3(-1,0,0);
+            }else {
+                movement = glm::vec3(1,0,0);
+            }
+            break;
+            
+        case JUMPING:
+            break;
+    }
+}
+
 void Entity::Update(float deltaTime, Entity *player, Entity *objects, int objectCount)
 {
     glm::vec3 previousPosition = position;
-    
-   
     
     if (billboard && entityType == ENEMY) {
         float directionX = position.x - player->position.x;
         float directionZ = position.z - player->position.z;
         rotation.y = glm::degrees(atan2f(directionX, directionZ));
-        
-        velocity.z = cos(glm::radians(rotation.y)) * -1.0f;
-        velocity.x = sin(glm::radians(rotation.y)) * -1.0f;
+        //AI(player, deltaTime);
     }
    
     velocity += acceleration * deltaTime;
@@ -50,21 +83,12 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
             // Ignore collisions with the floor
             if (objects[i].entityType == FLOOR) continue;
             
-            if (CheckCollision(&objects[i])) {
+            if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE) {
                 position = previousPosition;
                 break;
             }
         }
     }
-    
-    if (entityType == CUBE){
-        rotation.y += -45 * deltaTime;
-        rotation.z += -45 * deltaTime;
-    }
-    else if (entityType == ENEMY){
-        rotation.y += 30 * deltaTime;
-    }
-    
     
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::translate(modelMatrix, position);
