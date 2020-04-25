@@ -8,8 +8,6 @@ Entity::Entity()
     rotation = glm::vec3(0);
     scale = glm::vec3(1);
     movement = glm::vec3(0);
-    aiType = WALKER;
-    aiState = WALKING;
     
     modelMatrix = glm::mat4(1.0f);
     speed = 0.0f;
@@ -28,50 +26,52 @@ bool Entity::CheckCollision(Entity *other)
     return false;
 }
 
-void Entity::AI(Entity *player, float deltaTime){
-    switch(aiType){
-        case WALKER:
-            AIWalker();
-            break;
-            
-        case JUMPER:
-            AIJumper(deltaTime);
-    }
-}
-
-void Entity::AIWalker(){
-    movement = glm::vec3(0, 0, 1);
-}
-
-void Entity::AIJumper(float deltaTime){
-    movement = glm::vec3(0, 0.8, 0);
-    position += movement * speed * deltaTime;
-}
-
-void Entity::AIWaitAndGo(Entity *player){
-    switch(aiState){
-        case WALKING:
-            if (player->position.x < position.x) {
-                movement = glm::vec3(-1,0,0);
-            }else {
-                movement = glm::vec3(1,0,0);
-            }
-            break;
-            
-        case JUMPING:
-            break;
-    }
-}
+//void Entity::AI(Entity *player, float deltaTime){
+//    switch(aiType){
+//        case WALKER:
+//            AIWalker();
+//            break;
+//            
+//        case JUMPER:
+//            AIJumper(deltaTime);
+//    }
+//}
+//
+//void Entity::AIWalker(){
+//    movement = glm::vec3(0, 0, 1);
+//}
+//
+//void Entity::AIJumper(float deltaTime){
+//    movement = glm::vec3(0, 0.8, 0);
+//    position += movement * speed * deltaTime;
+//}
+//
+//void Entity::AIWaitAndGo(Entity *player){
+//    switch(aiState){
+//        case WALKING:
+//            if (player->position.x < position.x) {
+//                movement = glm::vec3(-1,0,0);
+//            }else {
+//                movement = glm::vec3(1,0,0);
+//            }
+//            break;
+//            
+//        case JUMPING:
+//            break;
+//    }
+//}
 
 void Entity::Update(float deltaTime, Entity *player, Entity *objects, int objectCount)
 {
     glm::vec3 previousPosition = position;
     
     if (billboard && entityType == ENEMY) {
-        float directionX = position.x - player->position.x;
-        float directionZ = position.z - player->position.z;
-        rotation.y = glm::degrees(atan2f(directionX, directionZ));
+//        float directionX = position.x - player->position.x;
+//        float directionZ = position.z - player->position.z;
+//        rotation.y = glm::degrees(atan2f(directionX, directionZ));
         //AI(player, deltaTime);
+        //velocity.z = cos(glm::radians(rotation.y)) * 1.0f;
+
     }
    
     velocity += acceleration * deltaTime;
@@ -89,6 +89,22 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
             }
         }
     }
+    
+    if (entityType == ENEMY) {
+        for (int i = 0; i < objectCount; i++)
+        {
+            // Ignore collisions with the floor
+            if (objects[i].entityType == FLOOR) continue;
+            velocity.z = cos(glm::radians(rotation.y)) * 1.0f;
+            if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE) {
+                velocity.z = cos(glm::radians(rotation.y)) * -1.0f;
+                break;
+            }
+        }
+    }
+    
+    
+    
     
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::translate(modelMatrix, position);

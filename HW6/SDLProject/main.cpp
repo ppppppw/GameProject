@@ -248,8 +248,6 @@ void Initialize() {
         state.enemies[i].acceleration = glm::vec3(0, 0, 0);
         state.enemies[i].entityType = ENEMY;
         state.enemies[i].rotation = glm::vec3(0, 0, 0);
-        state.enemies[i].aiType = WALKER;
-        state.enemies[i].aiState = WALKING;
         state.enemies[i].speed = 1.0f;
     }
     
