@@ -22,14 +22,19 @@ bool gameIsRunning = true;
 
 ShaderProgram program;
 glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
+glm::mat4 uiViewMatrix, uiProjectionMatrix;
+GLuint fontTextureID;
+GLuint heartTextureID;
 
 #define OBJECT_COUNT 4
 #define ENEMY_COUNT 10
+#define DOOR_COUNT 1
 
 struct GameState {
     Entity *player;
     Entity *objects;
     Entity *enemies;
+    Entity *doors;
 };
 
 GameState state;
@@ -50,6 +55,12 @@ void Initialize() {
     viewMatrix = glm::mat4(1.0f);
     modelMatrix = glm::mat4(1.0f);
     projectionMatrix = glm::perspective(glm::radians(45.0f), 1.777f, 0.1f, 100.0f);
+    
+    
+    uiViewMatrix = glm::mat4(1.0);
+    uiProjectionMatrix = glm::ortho(-6.4f, 6.4f, -3.6f, 3.6f, -1.0f, 1.0f);
+    fontTextureID = Util::LoadTexture("font1.png");
+    heartTextureID = Util::LoadTexture("platformPack_item017.png");
     
     program.SetProjectionMatrix(projectionMatrix);
     program.SetViewMatrix(viewMatrix);
@@ -115,6 +126,16 @@ void Initialize() {
         state.enemies[i].rotation = glm::vec3(0, 0, 0);
         state.enemies[i].acceleration = glm::vec3(0, 0, 0);
     }
+    
+    
+    state.doors = new Entity();
+    GLuint doorTextureID = Util::LoadTexture("door.png");
+    state.doors->billboard = true;
+    state.doors->textureID = doorTextureID;
+    state.doors->position = glm::vec3(10, 500, 10);
+//    state.doors->entityType = DOOR;
+//    state.doors->rotation = glm::vec3(0, 0, 0);
+//    state.doors->scale = glm::vec3(5, 5, 0);
 }
 
 
@@ -183,6 +204,8 @@ void Update() {
             state.enemies[i].Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
         }
         
+//        state.doors->Update(FIXED_TIMESTEP, state.player, state.objects, DOOR_COUNT);
+        
         deltaTime -= FIXED_TIMESTEP;
     }
     
@@ -197,6 +220,7 @@ void Update() {
 void Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+    program.SetProjectionMatrix(projectionMatrix);
     program.SetViewMatrix(viewMatrix);
     
     //state.player->Render(&program);
@@ -209,6 +233,15 @@ void Render() {
         state.enemies[i].Render(&program);
     }
     
+    state.doors->Render(&program);
+    
+    program.SetProjectionMatrix(uiProjectionMatrix);
+    program.SetViewMatrix(uiViewMatrix);
+    Util::DrawText(&program, fontTextureID, "Lives: 3", 0.5, -0.3f, glm::vec3(-6, 3.2, 0));
+    
+    for (int i = 0; i < 3; i++){
+        Util::DrawIcon(&program, heartTextureID, glm::vec3(5 + (i * 0.5f), 3.2, 0));
+    }
     
     SDL_GL_SwapWindow(displayWindow);
 }

@@ -29,6 +29,9 @@
 		F716F7BB24536DC200B6A9CF /* pikachu.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = F716F7B124536D9800B6A9CF /* pikachu.png */; };
 		F716F7BC24536DC300B6A9CF /* ship.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = F716F7B324536D9800B6A9CF /* ship.obj */; };
 		F716F7BD24536DC300B6A9CF /* ship.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = F716F7B524536D9900B6A9CF /* ship.png */; };
+		F716F7BF2453A89500B6A9CF /* font1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = F716F7BE2453A88C00B6A9CF /* font1.png */; };
+		F716F7C22453AA3600B6A9CF /* platformPack_item017.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = F716F7C12453AA2D00B6A9CF /* platformPack_item017.png */; };
+		F716F7CF2453B32D00B6A9CF /* door.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = F716F7CE2453B32100B6A9CF /* door.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +46,9 @@
 				F716F7AD24534A9F00B6A9CF /* crate1_diffuse.png in CopyFiles */,
 				F716F7B724536DC200B6A9CF /* cube.obj in CopyFiles */,
 				F716F7B824536DC200B6A9CF /* mario_body.png in CopyFiles */,
+				F716F7CF2453B32D00B6A9CF /* door.png in CopyFiles */,
+				F716F7BF2453A89500B6A9CF /* font1.png in CopyFiles */,
+				F716F7C22453AA3600B6A9CF /* platformPack_item017.png in CopyFiles */,
 				F716F7B924536DC200B6A9CF /* mario.obj in CopyFiles */,
 				E16A46A22453816200CFC44B /* ctg.png in CopyFiles */,
 				F716F7BA24536DC200B6A9CF /* pikachu.obj in CopyFiles */,
@@ -85,6 +91,10 @@
 		F716F7B424536D9800B6A9CF /* mario.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = mario.obj; sourceTree = "<group>"; };
 		F716F7B524536D9900B6A9CF /* ship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ship.png; sourceTree = "<group>"; };
 		F716F7B624536D9900B6A9CF /* pikachu.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = pikachu.obj; sourceTree = "<group>"; };
+		F716F7BE2453A88C00B6A9CF /* font1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = font1.png; sourceTree = "<group>"; };
+		F716F7C02453AA1E00B6A9CF /* platformPack_item017.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = platformPack_item017.png; sourceTree = "<group>"; };
+		F716F7C12453AA2D00B6A9CF /* platformPack_item017.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = platformPack_item017.png; sourceTree = "<group>"; };
+		F716F7CE2453B32100B6A9CF /* door.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = door.png; path = ../../../../door.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,13 +134,16 @@
 			isa = PBXGroup;
 			children = (
 				E16A46A12453815C00CFC44B /* ctg.png */,
+				F716F7BE2453A88C00B6A9CF /* font1.png */,
 				E16A469F24537F4E00CFC44B /* zomb.png */,
 				E16A469D245374EF00CFC44B /* floor.jpg */,
 				F716F7AC24534A9000B6A9CF /* crate1_diffuse.png */,
 				F716F7B224536D9800B6A9CF /* cube.obj */,
+				F716F7C12453AA2D00B6A9CF /* platformPack_item017.png */,
 				F716F7B024536D9800B6A9CF /* mario_body.png */,
 				F716F7B424536D9800B6A9CF /* mario.obj */,
 				F716F7B624536D9900B6A9CF /* pikachu.obj */,
+				F716F7CE2453B32100B6A9CF /* door.png */,
 				F716F7B124536D9800B6A9CF /* pikachu.png */,
 				F716F7B324536D9800B6A9CF /* ship.obj */,
 				F716F7B524536D9900B6A9CF /* ship.png */,
@@ -153,6 +166,7 @@
 		DBDF1B5F2323DE92007CECB1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F716F7C02453AA1E00B6A9CF /* platformPack_item017.png */,
 				DBDF1B672323DEEA007CECB1 /* SDL2_image.framework */,
 				DBDF1B682323DEEA007CECB1 /* SDL2_mixer.framework */,
 				DBDF1B662323DEEA007CECB1 /* SDL2.framework */,
