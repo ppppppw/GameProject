@@ -133,7 +133,7 @@ void Initialize() {
     GLuint doorTextureID = Util::LoadTexture("door.png");
     state.door->billboard = true;
     state.door->textureID = doorTextureID;
-    state.door->position = glm::vec3(4, 0.5f, 5);
+    state.door->position = glm::vec3(9.25f, 0.47f, -9.5f);
     state.door->entityType = DOOR;
 
 }
