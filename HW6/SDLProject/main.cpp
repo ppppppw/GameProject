@@ -34,7 +34,7 @@ struct GameState {
     Entity *player;
     Entity *objects;
     Entity *enemies;
-    Entity *doors;
+    Entity *door;
 };
 
 GameState state;
@@ -125,17 +125,17 @@ void Initialize() {
         state.enemies[i].position = glm::vec3(rand() % 20 - 10, 0.5, rand() % 20 - 10);
         state.enemies[i].rotation = glm::vec3(0, 0, 0);
         state.enemies[i].acceleration = glm::vec3(0, 0, 0);
+        state.enemies[i].entityType = ENEMY;
     }
     
     
-    state.doors = new Entity();
+    state.door = new Entity();
     GLuint doorTextureID = Util::LoadTexture("door.png");
-    state.doors->billboard = true;
-    state.doors->textureID = doorTextureID;
-    state.doors->position = glm::vec3(10, 500, 10);
-//    state.doors->entityType = DOOR;
-//    state.doors->rotation = glm::vec3(0, 0, 0);
-//    state.doors->scale = glm::vec3(5, 5, 0);
+    state.door->billboard = true;
+    state.door->textureID = doorTextureID;
+    state.door->position = glm::vec3(4, 0.5f, 5);
+    state.door->entityType = DOOR;
+
 }
 
 
@@ -196,6 +196,8 @@ void Update() {
     while (deltaTime >= FIXED_TIMESTEP) {
         state.player->Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
         
+        state.door->Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
+        
         for (int i = 0; i < OBJECT_COUNT; i++){
             state.objects[i].Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
         }
@@ -204,7 +206,6 @@ void Update() {
             state.enemies[i].Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
         }
         
-//        state.doors->Update(FIXED_TIMESTEP, state.player, state.objects, DOOR_COUNT);
         
         deltaTime -= FIXED_TIMESTEP;
     }
@@ -233,7 +234,7 @@ void Render() {
         state.enemies[i].Render(&program);
     }
     
-    state.doors->Render(&program);
+    state.door->Render(&program);
     
     program.SetProjectionMatrix(uiProjectionMatrix);
     program.SetViewMatrix(uiViewMatrix);

@@ -30,7 +30,9 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
 {
     glm::vec3 previousPosition = position;
     
-    if (billboard) {
+   
+    
+    if (billboard && entityType == ENEMY) {
         float directionX = position.x - player->position.x;
         float directionZ = position.z - player->position.z;
         rotation.y = glm::degrees(atan2f(directionX, directionZ));
