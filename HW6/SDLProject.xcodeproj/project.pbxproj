@@ -72,8 +72,6 @@
 		E16A469F24537F4E00CFC44B /* zomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zomb.png; sourceTree = "<group>"; };
 		E16A46A32453C38300CFC44B /* door.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = door.png; sourceTree = "<group>"; };
 		E16A46A92455D8B200CFC44B /* horror.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = horror.mp3; sourceTree = "<group>"; };
-		F7033EEA2455ECFF00E1AF43 /* pikachu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pikachu.png; path = "../../../../CS3113-master/Assets/3D Models/pikachu.png"; sourceTree = "<group>"; };
-		F7033EEB2455ED0600E1AF43 /* pikachu.obj */ = {isa = PBXFileReference; lastKnownFileType = text; name = pikachu.obj; path = "../../../../CS3113-master/Assets/3D Models/pikachu.obj"; sourceTree = "<group>"; };
 		F716F7AC24534A9000B6A9CF /* crate1_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crate1_diffuse.png; sourceTree = "<group>"; };
 		F716F7B224536D9800B6A9CF /* cube.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		F716F7BE2453A88C00B6A9CF /* font1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = font1.png; sourceTree = "<group>"; };
@@ -119,8 +117,6 @@
 			children = (
 				E16A46A92455D8B200CFC44B /* horror.mp3 */,
 				E16A46A32453C38300CFC44B /* door.png */,
-				F7033EEA2455ECFF00E1AF43 /* pikachu.png */,
-				F7033EEB2455ED0600E1AF43 /* pikachu.obj */,
 				F716F7BE2453A88C00B6A9CF /* font1.png */,
 				E16A469F24537F4E00CFC44B /* zomb.png */,
 				E16A469D245374EF00CFC44B /* floor.jpg */,

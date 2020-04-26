@@ -27,27 +27,37 @@ bool Entity::CheckCollision(Entity *other)
     return false;
 }
 
-void Entity::Update(float deltaTime, Entity *player, Entity *objects, int objectCount)
+void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyCount ,Entity *objects,
+        int objectCount)
 {
-//    isCollided = false;
+    isCollided = false;
     glm::vec3 previousPosition = position;
    
     velocity += acceleration * deltaTime;
     position += velocity * deltaTime;
     
     if (entityType == PLAYER) {
-        for (int i = 0; i < objectCount; i++)
+        
+        for (int i = 0; i < enemyCount; i++)
         {
-            // Ignore collisions with the floor
-            if (objects[i].entityType == FLOOR) continue;
-            
-            if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE) {
-                position = previousPosition;
-                
+            if (CheckCollision(&enemies[i])) {
+                isCollided = true;
                 break;
             }
-
         }
+        
+        for (int i = 0; i < objectCount; i++)
+        {
+            if (objects[i].entityType == FLOOR) continue;
+            if (CheckCollision(&objects[i])) {
+                position = previousPosition;
+                break;
+            }
+        }
+    }
+    
+    if (entityType == DOOR && CheckCollision(player)) {
+        isCollided = true;
     }
     
     if (entityType == ENEMY) {
@@ -62,15 +72,15 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
                 position += velocity;
             }
             
-            if (CheckCollision(player)) {
+//            if (CheckCollision(player)) {
 //                player->position = glm::vec3(-3.5f, 0.75f, 9.5f);
-                isCollided = true;
-                player->live--;
-                std::cout << 1;
-                isActive = false;
-                position = glm::vec3(-3.5f, 0.75f, 9.5f);
-                break;
-            }
+//                isCollided = true;
+//                player->live--;
+//                std::cout << 1;
+//                isActive = false;
+//                position = glm::vec3(-3.5f, 0.75f, 9.5f);
+//                break;
+//            }
         }
     }
     

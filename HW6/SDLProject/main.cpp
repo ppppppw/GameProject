@@ -276,9 +276,10 @@ void Initialize() {
     state.door->scale = glm::vec3(3, 3, 3);
     state.door->entityType = DOOR;
     
+    //initialization of font
     state.font = new Entity();
     state.font->textureID = Util::LoadTexture("font1.png");
-    state.font->position = glm::vec3(1,-1,0);
+    state.font->position = glm::vec3(-1, 1, 0);
 
 }
 
@@ -338,16 +339,16 @@ void Update() {
     }
     
     while (deltaTime >= FIXED_TIMESTEP) {
-        state.player->Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
+        state.player->Update(FIXED_TIMESTEP, state.player, state.enemies, ENEMY_COUNT, state.objects, OBJECT_COUNT);
         
-        state.door->Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
+        state.door->Update(FIXED_TIMESTEP, state.player, state.enemies, ENEMY_COUNT, state.objects, OBJECT_COUNT);
         
         for (int i = 0; i < OBJECT_COUNT; i++){
-            state.objects[i].Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
+            state.objects[i].Update(FIXED_TIMESTEP, state.player, state.enemies, ENEMY_COUNT, state.objects, OBJECT_COUNT);
         }
         
         for (int i = 0; i < ENEMY_COUNT; i++){
-            state.enemies[i].Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
+            state.enemies[i].Update(FIXED_TIMESTEP, state.player, state.enemies, ENEMY_COUNT, state.objects, OBJECT_COUNT);
         }
         
        
@@ -363,6 +364,7 @@ void Update() {
 }
 
 
+int Live = 3;
 bool isEnd = false;
 
 void Render() {
@@ -370,8 +372,6 @@ void Render() {
     
     program.SetProjectionMatrix(projectionMatrix);
     program.SetViewMatrix(viewMatrix);
-    
-    //state.player->Render(&program);
     
     for (int i = 0; i < OBJECT_COUNT; i++){
         state.objects[i].Render(&program);
@@ -387,19 +387,24 @@ void Render() {
     program.SetProjectionMatrix(uiProjectionMatrix);
     program.SetViewMatrix(uiViewMatrix);
     
-//    if (state.player->isCollided) {
-//        Initialize();
-//        Live--;
-//    }
+    if (state.player->isCollided) {
+        Initialize();
+        Live--;
+    }
     
-    Util::DrawText(&program, fontTextureID, "Lives: "+ std::to_string(state.player->live), 0.5, -0.3f, glm::vec3(-6, 3.2, 0));
+    Util::DrawText(&program, fontTextureID, "Lives: "+ std::to_string(Live), 0.5, -0.3f, glm::vec3(-6, 3.2, 0));
     
-    for (int i = 0; i < state.player->live; i++){
+    for (int i = 0; i < Live; i++){
         Util::DrawIcon(&program, heartTextureID, glm::vec3(5 + (i * 0.5f), 3.2, 0));
     }
     
-    if (state.player->live == 0) {
+    if (Live == 0) {
         Util::DrawText(&program, state.font->textureID, "You Lose !", 0.5f, -0.05f, state.font->position);
+        isEnd = true;
+    }
+    
+    if (state.door->isCollided) {
+        Util::DrawText(&program, state.font->textureID, "You Win !", 0.5f, -0.05f, state.font->position);
         isEnd = true;
     }
     

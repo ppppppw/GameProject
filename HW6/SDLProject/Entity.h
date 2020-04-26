@@ -32,7 +32,7 @@ public:
     float width;
     float height;
     float depth;
-    int live = 3;
+
     bool isCollided = false;
     bool isActive = true;
     
@@ -43,7 +43,8 @@ public:
     Entity();
     
     bool CheckCollision(Entity *other);
-    void Update(float deltaTime, Entity *player, Entity *objects, int objectCount);
+    void Update(float deltaTime, Entity *player, Entity *enemies, int enemyCount , Entity *objects,
+                int objectCount);
     void DrawBillboard(ShaderProgram *program);
     void Render(ShaderProgram *program);
 };
