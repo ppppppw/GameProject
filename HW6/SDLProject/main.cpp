@@ -12,6 +12,7 @@
 #include "glm/mat4x4.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "ShaderProgram.h"
+#include <SDL_mixer.h>
 
 #include "Util.h"
 #include "Entity.h"
@@ -29,18 +30,21 @@ GLuint heartTextureID;
 #define OBJECT_COUNT 133
 #define ENEMY_COUNT 3
 
+Mix_Music* music;
+
 
 struct GameState {
     Entity *player;
     Entity *objects;
     Entity *enemies;
     Entity *door;
+    Entity *font;
 };
 
 GameState state;
 
 void Initialize() {
-    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     displayWindow = SDL_CreateWindow("ZOOMBIE!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_OPENGL);
     SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
     SDL_GL_MakeCurrent(displayWindow, context);
@@ -51,6 +55,11 @@ void Initialize() {
     
     glViewport(0, 0, 1280, 720);
     program.Load("shaders/vertex_textured.glsl", "shaders/fragment_textured.glsl");
+    
+    //background music
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
+    music = Mix_LoadMUS("horror.mp3");
+    Mix_PlayMusic(music, -1);
     
     viewMatrix = glm::mat4(1.0f);
     modelMatrix = glm::mat4(1.0f);
@@ -216,7 +225,6 @@ void Initialize() {
         index++;
     }
     
-
     // 7v
     for (float i = -8.5f; i <= -6.5f; i++){
         state.objects[index].textureID = crateTextureID;
@@ -225,7 +233,6 @@ void Initialize() {
         state.objects[index].entityType = CRATE;
         index++;
     }
-    
     
     // 6h
     for (float i = -5.5f; i <= 7.5f; i++){
@@ -237,7 +244,6 @@ void Initialize() {
     }
     std::cout << index;
 
-    
     //enemy initialization
     state.enemies = new Entity[ENEMY_COUNT];
     GLuint enemyTextureID = Util::LoadTexture("zomb.png");
@@ -249,7 +255,9 @@ void Initialize() {
         state.enemies[i].entityType = ENEMY;
         state.enemies[i].rotation = glm::vec3(0, 0, 0);
         state.enemies[i].speed = 1.0f;
-        state.enemies[i].enemyState = 2;
+        state.enemies[i].width = 1.0f;
+        state.enemies[i].height = 1.0f;
+        state.enemies[i].depth = 1.0f;
         state.enemies[i].velocity.z = cos(glm::radians(state.enemies[i].rotation.y)) * 0.5f;
     }
     
@@ -257,9 +265,8 @@ void Initialize() {
     state.enemies[1].position = glm::vec3(7.0f, 0.5f, 7.5f);
     state.enemies[2].position = glm::vec3(2.75f, 0.5f, 6.5f);
   
- 
   
-    
+    //initialization of door
     state.door = new Entity();
     GLuint doorTextureID = Util::LoadTexture("door.png");
     state.door->billboard = true;
@@ -267,6 +274,10 @@ void Initialize() {
     state.door->position = glm::vec3(4.5f, 0.75f, -9.5f);
     state.door->scale = glm::vec3(3, 3, 3);
     state.door->entityType = DOOR;
+    
+    state.font = new Entity();
+    state.font->textureID = Util::LoadTexture("font1.png");
+    state.font->position = glm::vec3(1,-1,0);
 
 }
 
@@ -338,6 +349,7 @@ void Update() {
             state.enemies[i].Update(FIXED_TIMESTEP, state.player, state.objects, OBJECT_COUNT);
         }
         
+       
         
         deltaTime -= FIXED_TIMESTEP;
     }
@@ -349,6 +361,8 @@ void Update() {
     viewMatrix = glm::translate(viewMatrix, -state.player->position);
 }
 
+int Live = 3;
+bool isEnd = false;
 
 void Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -370,10 +384,21 @@ void Render() {
     
     program.SetProjectionMatrix(uiProjectionMatrix);
     program.SetViewMatrix(uiViewMatrix);
-    Util::DrawText(&program, fontTextureID, "Lives: 3", 0.5, -0.3f, glm::vec3(-6, 3.2, 0));
     
-    for (int i = 0; i < 3; i++){
+    if (state.player->isCollided) {
+        Initialize();
+        Live--;
+    }
+    
+    Util::DrawText(&program, fontTextureID, "Lives: "+ std::to_string(Live), 0.5, -0.3f, glm::vec3(-6, 3.2, 0));
+    
+    for (int i = 0; i < Live; i++){
         Util::DrawIcon(&program, heartTextureID, glm::vec3(5 + (i * 0.5f), 3.2, 0));
+    }
+    
+    if (Live == 0) {
+        Util::DrawText(&program, state.font->textureID, "You Lose !", 0.5f, -0.05f, state.font->position);
+        isEnd = true;
     }
     
     SDL_GL_SwapWindow(displayWindow);
@@ -388,7 +413,7 @@ int main(int argc, char* argv[]) {
     
     while (gameIsRunning) {
         ProcessInput();
-        Update();
+        if (!isEnd) Update();
         Render();
     }
     

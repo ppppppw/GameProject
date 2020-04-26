@@ -15,6 +15,7 @@ Entity::Entity()
     width = 1.0f;
     height = 1.0f;
     depth = 1.0f;
+    isCollided = false;
 }
 
 bool Entity::CheckCollision(Entity *other)
@@ -26,53 +27,10 @@ bool Entity::CheckCollision(Entity *other)
     return false;
 }
 
-//void Entity::AI(Entity *player, float deltaTime){
-//    switch(aiType){
-//        case WALKER:
-//            AIWalker();
-//            break;
-//            
-//        case JUMPER:
-//            AIJumper(deltaTime);
-//    }
-//}
-//
-//void Entity::AIWalker(){
-//    movement = glm::vec3(0, 0, 1);
-//}
-//
-//void Entity::AIJumper(float deltaTime){
-//    movement = glm::vec3(0, 0.8, 0);
-//    position += movement * speed * deltaTime;
-//}
-//
-//void Entity::AIWaitAndGo(Entity *player){
-//    switch(aiState){
-//        case WALKING:
-//            if (player->position.x < position.x) {
-//                movement = glm::vec3(-1,0,0);
-//            }else {
-//                movement = glm::vec3(1,0,0);
-//            }
-//            break;
-//            
-//        case JUMPING:
-//            break;
-//    }
-//}
-
 void Entity::Update(float deltaTime, Entity *player, Entity *objects, int objectCount)
 {
+    isCollided = false;
     glm::vec3 previousPosition = position;
-    
-   // if (billboard && entityType == ENEMY) {
-//        float directionX = position.x - player->position.x;
-//        float directionZ = position.z - player->position.z;
-//        rotation.y = glm::degrees(atan2f(directionX, directionZ));
-        //AI(player, deltaTime);
-        //velocity.z = cos(glm::radians(rotation.y)) * 1.0f;
-
-   // }
    
     velocity += acceleration * deltaTime;
     position += velocity * deltaTime;
@@ -85,6 +43,14 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
             
             if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE) {
                 position = previousPosition;
+                std::cout << 2;
+                break;
+            }
+            
+            if (CheckCollision(&objects[i]) && objects[i].entityType == ENEMY) {
+                position = glm::vec3(0);
+                isCollided = true;
+                std::cout << 1;
                 break;
             }
         }
@@ -96,42 +62,13 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
             // Ignore collisions with the floor
             if (objects[i].entityType == FLOOR) continue;
             
-            
+            //update walking AI
             if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
                 velocity.z = -velocity.z;
-                //cos(glm::radians(rotation.y)) * -3.5f;
                 position += velocity;
             }
-//            switch (enemyState) {
-//                case 1:
-//                    velocity.z = cos(glm::radians(rotation.y)) * -1.0f;
-//                    if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
-//                        enemyState = 2;
-//                        position += velocity * deltaTime;
-//                    }
-//                    break;
-//                case 2:
-//                    velocity.z = cos(glm::radians(rotation.y)) * 0.5f;
-//                    if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
-//                        enemyState = 1;
-//                        position += velocity * deltaTime;
-//
-//                    }
-//                    break;
-//                default:
-//                    break;
-//            }
-//
-            
-            
-            
-//            if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE) {
-//                velocity.z = cos(glm::radians(rotation.y)) * -1.0f;
-//                break;
-//            }
         }
     }
-    
     
     
     modelMatrix = glm::mat4(1.0f);

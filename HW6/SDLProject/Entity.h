@@ -16,15 +16,10 @@
 #include "Mesh.h"
 enum EntityType { PLAYER, ENEMY, FLOOR, CRATE, DOOR};
 
-//enum AIType {WALKER, JUMPER};
-//enum AIState {WALKING, JUMPING};
-
 class Entity {
 public:
     EntityType entityType;
-//    AIType aiType;
-//    AIState aiState;
-    
+
     glm::vec3 position;
     glm::vec3 velocity;
     glm::vec3 acceleration;
@@ -37,8 +32,7 @@ public:
     float width;
     float height;
     float depth;
-    
-    int enemyState;
+    bool isCollided;
     
     GLuint textureID;
     Mesh *mesh;
@@ -46,10 +40,6 @@ public:
     
     Entity();
     
-//    void AI(Entity *player, float deltaTime);
-//    void AIWalker();
-//    void AIJumper(float deltaTime);
-//    void AIWaitAndGo(Entity *player);
     bool CheckCollision(Entity *other);
     void Update(float deltaTime, Entity *player, Entity *objects, int objectCount);
     void DrawBillboard(ShaderProgram *program);
