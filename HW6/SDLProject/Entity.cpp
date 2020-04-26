@@ -15,7 +15,7 @@ Entity::Entity()
     width = 1.0f;
     height = 1.0f;
     depth = 1.0f;
-    isCollided = false;
+//    isCollided = false;
 }
 
 bool Entity::CheckCollision(Entity *other)
@@ -29,7 +29,7 @@ bool Entity::CheckCollision(Entity *other)
 
 void Entity::Update(float deltaTime, Entity *player, Entity *objects, int objectCount)
 {
-    isCollided = false;
+//    isCollided = false;
     glm::vec3 previousPosition = position;
    
     velocity += acceleration * deltaTime;
@@ -43,16 +43,10 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
             
             if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE) {
                 position = previousPosition;
-                std::cout << 2;
+                
                 break;
             }
-            
-            if (CheckCollision(&objects[i]) && objects[i].entityType == ENEMY) {
-                position = glm::vec3(0);
-                isCollided = true;
-                std::cout << 1;
-                break;
-            }
+
         }
     }
     
@@ -66,6 +60,16 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
             if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
                 velocity.z = -velocity.z;
                 position += velocity;
+            }
+            
+            if (CheckCollision(player)) {
+//                player->position = glm::vec3(-3.5f, 0.75f, 9.5f);
+                isCollided = true;
+                player->live--;
+                std::cout << 1;
+                isActive = false;
+                position = glm::vec3(-3.5f, 0.75f, 9.5f);
+                break;
             }
         }
     }

@@ -32,7 +32,9 @@ public:
     float width;
     float height;
     float depth;
-    bool isCollided;
+    int live = 3;
+    bool isCollided = false;
+    bool isActive = true;
     
     GLuint textureID;
     Mesh *mesh;

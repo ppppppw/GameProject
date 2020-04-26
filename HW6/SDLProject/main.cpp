@@ -248,6 +248,7 @@ void Initialize() {
     state.enemies = new Entity[ENEMY_COUNT];
     GLuint enemyTextureID = Util::LoadTexture("zomb.png");
     
+    
     for (int i = 0; i < ENEMY_COUNT; i++) {
         state.enemies[i].billboard = true;
         state.enemies[i].textureID = enemyTextureID;
@@ -361,7 +362,7 @@ void Update() {
     viewMatrix = glm::translate(viewMatrix, -state.player->position);
 }
 
-int Live = 3;
+
 bool isEnd = false;
 
 void Render() {
@@ -377,7 +378,8 @@ void Render() {
     }
     
     for (int i = 0; i < ENEMY_COUNT; i++){
-        state.enemies[i].Render(&program);
+        if (state.enemies[i].isActive == true)
+            state.enemies[i].Render(&program);
     }
     
     state.door->Render(&program);
@@ -385,18 +387,18 @@ void Render() {
     program.SetProjectionMatrix(uiProjectionMatrix);
     program.SetViewMatrix(uiViewMatrix);
     
-    if (state.player->isCollided) {
-        Initialize();
-        Live--;
-    }
+//    if (state.player->isCollided) {
+//        Initialize();
+//        Live--;
+//    }
     
-    Util::DrawText(&program, fontTextureID, "Lives: "+ std::to_string(Live), 0.5, -0.3f, glm::vec3(-6, 3.2, 0));
+    Util::DrawText(&program, fontTextureID, "Lives: "+ std::to_string(state.player->live), 0.5, -0.3f, glm::vec3(-6, 3.2, 0));
     
-    for (int i = 0; i < Live; i++){
+    for (int i = 0; i < state.player->live; i++){
         Util::DrawIcon(&program, heartTextureID, glm::vec3(5 + (i * 0.5f), 3.2, 0));
     }
     
-    if (Live == 0) {
+    if (state.player->live == 0) {
         Util::DrawText(&program, state.font->textureID, "You Lose !", 0.5f, -0.05f, state.font->position);
         isEnd = true;
     }
