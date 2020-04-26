@@ -253,8 +253,8 @@ void Initialize() {
     }
     
     state.enemies[0].position = glm::vec3(0, 0.5f, 5.5f);
-    state.enemies[1].position = glm::vec3(7.0f, 0.5f, 5.5f);
-    state.enemies[2].position = glm::vec3(2.75f, 0.5f, 4.5f);
+    state.enemies[1].position = glm::vec3(7.0f, 0.5f, 7.5f);
+    state.enemies[2].position = glm::vec3(2.75f, 0.5f, 6.5f);
   
  
   

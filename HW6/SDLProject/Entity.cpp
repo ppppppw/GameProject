@@ -65,14 +65,14 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
 {
     glm::vec3 previousPosition = position;
     
-    if (billboard && entityType == ENEMY) {
+   // if (billboard && entityType == ENEMY) {
 //        float directionX = position.x - player->position.x;
 //        float directionZ = position.z - player->position.z;
 //        rotation.y = glm::degrees(atan2f(directionX, directionZ));
         //AI(player, deltaTime);
         //velocity.z = cos(glm::radians(rotation.y)) * 1.0f;
 
-    }
+   // }
    
     velocity += acceleration * deltaTime;
     position += velocity * deltaTime;
@@ -96,26 +96,31 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
             // Ignore collisions with the floor
             if (objects[i].entityType == FLOOR) continue;
             
-            
-            switch (enemyState) {
-                case 1:
-                    velocity.z = cos(glm::radians(rotation.y)) * 1.0f;
-                    if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
-                        std::cout << 0;
-                        enemyState = 2;
-                    }
-                    break;
-                case 2:
-                    velocity.z = cos(glm::radians(rotation.y)) * -1.0f;
-                    if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
-                        enemyState = 1;
-                        std::cout << 1;
-                    }
-                    break;
-                default:
-                    break;
+            velocity.z = cos(glm::radians(rotation.y)) * 0.5f;
+            if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
+                    velocity.z = cos(glm::radians(rotation.y)) * -3.5f;
+                    position += velocity;
             }
-           
+//            switch (enemyState) {
+//                case 1:
+//                    velocity.z = cos(glm::radians(rotation.y)) * -1.0f;
+//                    if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
+//                        enemyState = 2;
+//                        position += velocity * deltaTime;
+//                    }
+//                    break;
+//                case 2:
+//                    velocity.z = cos(glm::radians(rotation.y)) * 0.5f;
+//                    if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
+//                        enemyState = 1;
+//                        position += velocity * deltaTime;
+//
+//                    }
+//                    break;
+//                default:
+//                    break;
+//            }
+//
             
             
             
@@ -125,7 +130,6 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
 //            }
         }
     }
-    
     
     
     
