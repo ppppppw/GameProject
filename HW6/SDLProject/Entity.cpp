@@ -96,10 +96,11 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
             // Ignore collisions with the floor
             if (objects[i].entityType == FLOOR) continue;
             
-            velocity.z = cos(glm::radians(rotation.y)) * 0.5f;
+            
             if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
-                    velocity.z = cos(glm::radians(rotation.y)) * -3.5f;
-                    position += velocity;
+                velocity.z = -velocity.z;
+                //cos(glm::radians(rotation.y)) * -3.5f;
+                position += velocity;
             }
 //            switch (enemyState) {
 //                case 1:

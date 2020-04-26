@@ -250,6 +250,7 @@ void Initialize() {
         state.enemies[i].rotation = glm::vec3(0, 0, 0);
         state.enemies[i].speed = 1.0f;
         state.enemies[i].enemyState = 2;
+        state.enemies[i].velocity.z = cos(glm::radians(state.enemies[i].rotation.y)) * 0.5f;
     }
     
     state.enemies[0].position = glm::vec3(0, 0.5f, 5.5f);
