@@ -95,11 +95,34 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
         {
             // Ignore collisions with the floor
             if (objects[i].entityType == FLOOR) continue;
-            velocity.z = cos(glm::radians(rotation.y)) * 1.0f;
-            if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE) {
-                velocity.z = cos(glm::radians(rotation.y)) * -1.0f;
-                break;
+            
+            
+            switch (enemyState) {
+                case 1:
+                    velocity.z = cos(glm::radians(rotation.y)) * 1.0f;
+                    if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
+                        std::cout << 0;
+                        enemyState = 2;
+                    }
+                    break;
+                case 2:
+                    velocity.z = cos(glm::radians(rotation.y)) * -1.0f;
+                    if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE){
+                        enemyState = 1;
+                        std::cout << 1;
+                    }
+                    break;
+                default:
+                    break;
             }
+           
+            
+            
+            
+//            if (CheckCollision(&objects[i]) && objects[i].entityType == CRATE) {
+//                velocity.z = cos(glm::radians(rotation.y)) * -1.0f;
+//                break;
+//            }
         }
     }
     

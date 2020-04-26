@@ -38,6 +38,8 @@ public:
     float height;
     float depth;
     
+    int enemyState;
+    
     GLuint textureID;
     Mesh *mesh;
     glm::mat4 modelMatrix;

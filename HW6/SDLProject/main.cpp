@@ -79,7 +79,7 @@ void Initialize() {
     //initialize player
     state.player = new Entity();
     state.player->entityType = PLAYER;
-    state.player->position = glm::vec3(-3.5f, 0.75f, 15.5f);
+    state.player->position = glm::vec3(-3.5f, 0.75f, 9.5f);
     state.player->acceleration = glm::vec3(0, 0, 0);
     state.player->speed = 1.0f;
     
@@ -249,6 +249,7 @@ void Initialize() {
         state.enemies[i].entityType = ENEMY;
         state.enemies[i].rotation = glm::vec3(0, 0, 0);
         state.enemies[i].speed = 1.0f;
+        state.enemies[i].enemyState = 2;
     }
     
     state.enemies[0].position = glm::vec3(0, 0.5f, 5.5f);
