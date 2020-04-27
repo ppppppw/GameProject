@@ -28,6 +28,7 @@ ShaderProgram program;
 glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
 
 Mix_Music* music;
+Mix_Chunk* lose;
 
 Scene *currentScene;
 Scene *sceneList[2];

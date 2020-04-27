@@ -9,8 +9,10 @@ glm::mat4 uiViewMatrix, uiProjectionMatrix;
 
 
 void Level1::Initialize() {
-    ohno = Mix_LoadWAV("ohno.mp3");
-    
+    ohno = Mix_LoadMUS("ohno.mp3");
+    Mix_PlayMusic(ohno, -1);
+    lose = Mix_LoadWAV("gameover.wav");
+    success= Mix_LoadWAV("success.wav");
     state.nextScene = -1;
     
     uiViewMatrix = glm::mat4(1.0);
@@ -254,6 +256,7 @@ void Level1::Render(ShaderProgram *program) {
     program->SetViewMatrix(uiViewMatrix);
 
     if (state.player->isCollided) {
+        Mix_PlayChannel(-1, lose, 0);
         Initialize();
         Live--;
     }
@@ -270,6 +273,7 @@ void Level1::Render(ShaderProgram *program) {
     }
 
     if (state.door->isCollided) {
+        Mix_PlayChannel(-1, success, 0);
         Util::DrawText(program, state.font->textureID, "You Win !", 0.5f, -0.05f, glm::vec3(-2,0,0));
         isEnd = true;
     }

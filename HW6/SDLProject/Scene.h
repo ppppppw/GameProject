@@ -33,7 +33,9 @@ struct GameState {
 class Scene {
 public:
     GameState state;
-    Mix_Chunk *ohno;
+    Mix_Music *ohno;
+    Mix_Chunk *lose;
+    Mix_Chunk *success;
     int Live = 3;
     bool isEnd = false;
     virtual void Initialize() = 0;
