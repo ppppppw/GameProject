@@ -15,7 +15,6 @@ Entity::Entity()
     width = 1.0f;
     height = 1.0f;
     depth = 1.0f;
-//    isCollided = false;
 }
 
 bool Entity::CheckCollision(Entity *other)
@@ -71,16 +70,6 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
                 velocity.z = -velocity.z;
                 position += velocity;
             }
-            
-//            if (CheckCollision(player)) {
-//                player->position = glm::vec3(-3.5f, 0.75f, 9.5f);
-//                isCollided = true;
-//                player->live--;
-//                std::cout << 1;
-//                isActive = false;
-//                position = glm::vec3(-3.5f, 0.75f, 9.5f);
-//                break;
-//            }
         }
     }
     

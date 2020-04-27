@@ -1,6 +1,6 @@
 #include "Level1.h"
 #define OBJECT_COUNT 133
-#define ENEMY_COUNT 3
+#define ENEMY_COUNT 6
 
 GLuint fontTextureID;
 GLuint heartTextureID;
@@ -200,6 +200,9 @@ void Level1::Initialize() {
     state.enemies[0].position = glm::vec3(0, 0.5f, 5.5f);
     state.enemies[1].position = glm::vec3(7.0f, 0.5f, 7.5f);
     state.enemies[2].position = glm::vec3(2.75f, 0.5f, 6.5f);
+    state.enemies[3].position = glm::vec3(-7.55f, 0.5f, 6.5f);
+    state.enemies[4].position = glm::vec3(-5.35f, 0.5f, -3.5f);
+    state.enemies[5].position = glm::vec3(7.55f, 0.5f, -7.5f);
 
 
     //initialization of door
