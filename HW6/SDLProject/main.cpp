@@ -26,7 +26,7 @@ bool gameIsRunning = true;
 
 ShaderProgram program;
 glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
-glm::mat4 uiViewMatrix, uiProjectionMatrix;
+//glm::mat4 uiViewMatrix, uiProjectionMatrix;
 //GLuint fontTextureID;
 //GLuint heartTextureID;
 
@@ -76,8 +76,8 @@ void Initialize() {
     projectionMatrix = glm::perspective(glm::radians(45.0f), 1.777f, 0.1f, 100.0f);
     
     
-    uiViewMatrix = glm::mat4(1.0);
-    uiProjectionMatrix = glm::ortho(-6.4f, 6.4f, -3.6f, 3.6f, -1.0f, 1.0f);
+//    uiViewMatrix = glm::mat4(1.0);
+//    uiProjectionMatrix = glm::ortho(-6.4f, 6.4f, -3.6f, 3.6f, -1.0f, 1.0f);
 //    fontTextureID = Util::LoadTexture("font1.png");
 //    heartTextureID = Util::LoadTexture("platformPack_item017.png");
 //
@@ -393,8 +393,8 @@ void Render() {
 //
 //    state.door->Render(&program);
 //    
-    program.SetProjectionMatrix(uiProjectionMatrix);
-    program.SetViewMatrix(uiViewMatrix);
+//    program.SetProjectionMatrix(uiProjectionMatrix);
+//    program.SetViewMatrix(uiViewMatrix);
 //
 //    if (state.player->isCollided) {
 //        Initialize();

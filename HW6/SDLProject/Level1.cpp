@@ -5,12 +5,16 @@
 GLuint fontTextureID;
 GLuint heartTextureID;
 
+glm::mat4 uiViewMatrix, uiProjectionMatrix;
+
 
 void Level1::Initialize() {
     ohno = Mix_LoadWAV("ohno.mp3");
     
     state.nextScene = -1;
     
+    uiViewMatrix = glm::mat4(1.0);
+    uiProjectionMatrix = glm::ortho(-6.4f, 6.4f, -3.6f, 3.6f, -1.0f, 1.0f);
     fontTextureID = Util::LoadTexture("font1.png");
     heartTextureID = Util::LoadTexture("platformPack_item017.png");
 
@@ -243,8 +247,8 @@ void Level1::Render(ShaderProgram *program) {
 
     state.door->Render(program);
 
-//    program->SetProjectionMatrix(uiProjectionMatrix);
-//    program->SetViewMatrix(uiViewMatrix);
+    program->SetProjectionMatrix(uiProjectionMatrix);
+    program->SetViewMatrix(uiViewMatrix);
 
     if (state.player->isCollided) {
         Initialize();
@@ -258,12 +262,12 @@ void Level1::Render(ShaderProgram *program) {
     }
 
     if (Live == 0) {
-        Util::DrawText(program, state.font->textureID, "You Lose !", 0.5f, -0.05f, state.font->position);
+        Util::DrawText(program, state.font->textureID, "You Lose !", 0.5f, -0.05f, glm::vec3(-2,0,0));
         isEnd = true;
     }
 
     if (state.door->isCollided) {
-        Util::DrawText(program, state.font->textureID, "You Win !", 0.5f, -0.05f, state.font->position);
+        Util::DrawText(program, state.font->textureID, "You Win !", 0.5f, -0.05f, glm::vec3(-2,0,0));
         isEnd = true;
     }
     
