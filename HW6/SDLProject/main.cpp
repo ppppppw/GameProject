@@ -292,7 +292,7 @@ void Initialize() {
 //    state.font->position = glm::vec3(-1, 1, 0);
     sceneList[0] = new Start();
     sceneList[1] = new Level1();
-    SwitchToScene(sceneList[1]);
+    SwitchToScene(sceneList[0]);
 }
 
 
