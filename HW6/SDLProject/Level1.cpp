@@ -9,8 +9,6 @@ glm::mat4 uiViewMatrix, uiProjectionMatrix;
 
 
 void Level1::Initialize() {
-    ohno = Mix_LoadMUS("ohno.mp3");
-    Mix_PlayMusic(ohno, -1);
     lose = Mix_LoadWAV("gameover.wav");
     success= Mix_LoadWAV("success.wav");
     state.nextScene = -1;
@@ -26,6 +24,9 @@ void Level1::Initialize() {
     state.player->position = glm::vec3(-3.5f, 0.75f, 9.5f);
     state.player->acceleration = glm::vec3(0, 0, 0);
     state.player->speed = 1.0f;
+    state.player->width = 0.8f;
+    state.player->height = 0.8f;
+    state.player->depth = 0.8f;
     
     std::cout << state.player->rotation.y;
 

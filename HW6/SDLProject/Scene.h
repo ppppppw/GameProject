@@ -33,7 +33,6 @@ struct GameState {
 class Scene {
 public:
     GameState state;
-    Mix_Music *ohno;
     Mix_Chunk *lose;
     Mix_Chunk *success;
     int Live = 3;

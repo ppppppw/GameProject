@@ -83,7 +83,6 @@
 		E16A46B624573CAE00CFC44B /* success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = success.wav; sourceTree = "<group>"; };
 		F7033EF624562ECF00E1AF43 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
 		F7033EF924562ED000E1AF43 /* Start.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Start.cpp; sourceTree = "<group>"; };
-		F7033EFA24562ED000E1AF43 /* ohno.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ohno.mp3; sourceTree = "<group>"; };
 		F7033EFB24562ED000E1AF43 /* Start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Start.h; sourceTree = "<group>"; };
 		F7033EFC24562ED000E1AF43 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
 		F7033F032456956800E1AF43 /* Level1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Level1.h; sourceTree = "<group>"; };
@@ -155,7 +154,6 @@
 				DB1BA2942378E51A001F1FBC /* Mesh.h */,
 				DB1BA2962378E7A5001F1FBC /* Util.cpp */,
 				DB1BA2972378E7A5001F1FBC /* Util.h */,
-				F7033EFA24562ED000E1AF43 /* ohno.mp3 */,
 				F7033EFC24562ED000E1AF43 /* Scene.cpp */,
 				F7033EF624562ECF00E1AF43 /* Scene.h */,
 				F7033EF924562ED000E1AF43 /* Start.cpp */,
