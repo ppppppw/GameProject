@@ -22,6 +22,9 @@
 		E16A46A024537F6F00CFC44B /* zomb.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = E16A469F24537F4E00CFC44B /* zomb.png */; };
 		E16A46A42453C38700CFC44B /* door.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = E16A46A32453C38300CFC44B /* door.png */; };
 		E16A46AA2455D8C700CFC44B /* horror.mp3 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E16A46A92455D8B200CFC44B /* horror.mp3 */; };
+		F7033EFE24562ED000E1AF43 /* Start.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7033EF924562ED000E1AF43 /* Start.cpp */; };
+		F7033EFF24562ED000E1AF43 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7033EFC24562ED000E1AF43 /* Scene.cpp */; };
+		F7033F01245650A900E1AF43 /* Level1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7033F00245650A900E1AF43 /* Level1.cpp */; };
 		F716F7AD24534A9F00B6A9CF /* crate1_diffuse.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = F716F7AC24534A9000B6A9CF /* crate1_diffuse.png */; };
 		F716F7B724536DC200B6A9CF /* cube.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = F716F7B224536D9800B6A9CF /* cube.obj */; };
 		F716F7BF2453A89500B6A9CF /* font1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = F716F7BE2453A88C00B6A9CF /* font1.png */; };
@@ -72,6 +75,13 @@
 		E16A469F24537F4E00CFC44B /* zomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zomb.png; sourceTree = "<group>"; };
 		E16A46A32453C38300CFC44B /* door.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = door.png; sourceTree = "<group>"; };
 		E16A46A92455D8B200CFC44B /* horror.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = horror.mp3; sourceTree = "<group>"; };
+		F7033EF624562ECF00E1AF43 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		F7033EF924562ED000E1AF43 /* Start.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Start.cpp; sourceTree = "<group>"; };
+		F7033EFA24562ED000E1AF43 /* ohno.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ohno.mp3; sourceTree = "<group>"; };
+		F7033EFB24562ED000E1AF43 /* Start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Start.h; sourceTree = "<group>"; };
+		F7033EFC24562ED000E1AF43 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		F7033F00245650A900E1AF43 /* Level1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Level1.cpp; path = ../../../IntroToGame/HW5/Level1.cpp; sourceTree = "<group>"; };
+		F7033F02245650B000E1AF43 /* Level1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Level1.h; path = ../../../IntroToGame/HW5/Level1.h; sourceTree = "<group>"; };
 		F716F7AC24534A9000B6A9CF /* crate1_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crate1_diffuse.png; sourceTree = "<group>"; };
 		F716F7B224536D9800B6A9CF /* cube.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		F716F7BE2453A88C00B6A9CF /* font1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = font1.png; sourceTree = "<group>"; };
@@ -135,6 +145,13 @@
 				DB1BA2942378E51A001F1FBC /* Mesh.h */,
 				DB1BA2962378E7A5001F1FBC /* Util.cpp */,
 				DB1BA2972378E7A5001F1FBC /* Util.h */,
+				F7033EFA24562ED000E1AF43 /* ohno.mp3 */,
+				F7033EFC24562ED000E1AF43 /* Scene.cpp */,
+				F7033EF624562ECF00E1AF43 /* Scene.h */,
+				F7033EF924562ED000E1AF43 /* Start.cpp */,
+				F7033EFB24562ED000E1AF43 /* Start.h */,
+				F7033F02245650B000E1AF43 /* Level1.h */,
+				F7033F00245650A900E1AF43 /* Level1.cpp */,
 			);
 			path = SDLProject;
 			sourceTree = "<group>";
@@ -208,11 +225,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7033EFF24562ED000E1AF43 /* Scene.cpp in Sources */,
 				DBDF1B532323DE3F007CECB1 /* main.cpp in Sources */,
 				DB4C61FB236CE8FD0096309D /* Entity.cpp in Sources */,
 				DB1BA2952378E51A001F1FBC /* Mesh.cpp in Sources */,
+				F7033F01245650A900E1AF43 /* Level1.cpp in Sources */,
 				DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */,
 				DB1BA2982378E7A5001F1FBC /* Util.cpp in Sources */,
+				F7033EFE24562ED000E1AF43 /* Start.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

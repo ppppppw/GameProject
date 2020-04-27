@@ -36,6 +36,7 @@ public:
     bool isCollided = false;
     bool isActive = true;
     
+    
     GLuint textureID;
     Mesh *mesh;
     glm::mat4 modelMatrix;
