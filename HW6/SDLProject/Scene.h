@@ -32,9 +32,10 @@ struct GameState {
 };
 class Scene {
 public:
-    
     GameState state;
     Mix_Chunk *ohno;
+    int Live = 3;
+    bool isEnd = false;
     virtual void Initialize() = 0;
     virtual void Update(float deltaTime) = 0;
     virtual void Render(ShaderProgram *program) = 0;

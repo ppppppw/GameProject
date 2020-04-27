@@ -379,6 +379,7 @@ void Render() {
     program.SetProjectionMatrix(projectionMatrix);
     program.SetViewMatrix(viewMatrix);
     
+    
     currentScene->Render(&program);
     
 //    for (int i = 0; i < OBJECT_COUNT; i++){
@@ -428,8 +429,7 @@ int main(int argc, char* argv[]) {
     
     while (gameIsRunning) {
         ProcessInput();
-//        if (!currentScene->isEnd)
-        Update();
+        if (!currentScene->isEnd) Update();
         Render();
     }
     
